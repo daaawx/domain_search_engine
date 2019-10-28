@@ -1,3 +1,17 @@
 .container {
  margin: 25px;
 }
+
+#results {
+  margin-left: 10vh;
+}
+
+#resultCount {
+  margin-left: 10vh;
+}
+
+.result {
+  margin-top: 5px;
+  display: block;
+}
+

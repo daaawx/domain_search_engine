@@ -11,8 +11,9 @@
   <div class="row pb-5 d-flex flex-column align-items-center">
     <a href="{% url 'home' %}"><img src="{% static 'images/dse-text-400.png' %}" alt="" id="logo"></a>
     <form action="{% url 'search' %}" method="GET" class="form-inline mt-3 w-100 d-flex justify-content-center">
-      <input class="form-control form-control-sm w-75" type="text" placeholder="Search"
-             aria-label="Search">
+      <input class="form-control form-control-sm w-100" type="text" placeholder=""
+             aria-label="Buscar">
+      <button class="btn btn-primary btn-rounded btn-sm mt-3" type="submit">Buscar</button>
     </form>
 
   </div>
