@@ -20,7 +20,7 @@ $(document).ready(function() {
     var http = new XMLHttpRequest();
     var post_url = BASE_URL + '/check_domain/';
 
-    var title = $(element).find('h4');
+    var title = $(element).find('h5');
     var url = $(element).find('.url').text();
 
     var params = `query=${query}&url=${url}`;
