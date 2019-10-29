@@ -20,3 +20,5 @@ coreapi==2.3.3  # https://github.com/core-api/python-client
 requests
 fake_useragent
 tldextract
+bs4
+lxml

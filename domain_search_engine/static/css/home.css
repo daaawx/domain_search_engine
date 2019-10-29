@@ -1,5 +1,10 @@
 #logo {
-  width: 400px;
+  width: 363px;
+}
+
+
+button {
+  min-width: 60px;
 }
 
 .container {

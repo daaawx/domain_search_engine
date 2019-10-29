@@ -1,4 +1,9 @@
+import json
 import requests
+from django.conf import settings
+from fake_useragent import UserAgent
+import tldextract
+from bs4 import BeautifulSoup
 
 
 # https://reverse-whois-api.whoisxmlapi.com/docs
@@ -21,10 +26,32 @@ class WhoisCheck:
             'responseFormat': 'json'
         }
 
-        r = requests.post('https://reverse-whois-api.whoisxmlapi.com/api/v2', headers=self.headers, data=payload)
+        r = requests.post('https://reverse-whois-api.whoisxmlapi.com/api/v2', headers=self.headers,
+                          data=json.dumps(payload))
+        obj = r.json()
 
-        self.count = r.json()['domainsCount']
-        self.domains_list = r.json()['domainsList']
+        return obj['domainsList']
+
+    def format_title(self, url):
+        sub, dom, suf = tldextract.extract(url)
+        return dom
+
+    def get_info(self, url):
+        ua = UserAgent()
+        headers = {
+            'User-Agent': ua.random,
+            'Accept-Language': 'en-US,en;q=0.9',
+        }
+
+        try:
+            r = requests.get(url, headers=headers)
+            title = BeautifulSoup(r.text, 'lxml').title.text
+            has_ssl = r.url.startswith('https')
+        except:
+            title = self.format_title(url)
+            has_ssl = False
+
+        return title, has_ssl
 
     def __init__(self, api_key):
         self.API_KEY = api_key
@@ -35,7 +62,7 @@ class WhoisCheck:
 
 
 if __name__ == '__main__':
-    whois = WhoisCheck('')
+    whois = WhoisCheck("at_ArZ4eRzpqxy6AONA462eYvPfw8mt1")
     whois.check('taxi')
     print(whois.count)
     print(whois.domains_list)

@@ -266,3 +266,4 @@ SOCIALACCOUNT_ADAPTER = "domain_search_engine.users.adapters.SocialAccountAdapte
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+WHOIS_API_KEY = env.get_value('WHOIS_API_KEY')
