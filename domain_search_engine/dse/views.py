@@ -26,6 +26,7 @@ def search(request):
         if not DomainModel.objects.filter(search_term=query):
             whois = WhoisCheck(settings.WHOIS_API_KEY)
             domains_list = whois.check(query)
+            domains_list.extend(whois.scrape(query))
 
             obj_list = [DomainModel(search_term=query, url=item, title=whois.format_title(item)) for item in
                         domains_list if query in item]

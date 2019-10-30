@@ -32,6 +32,24 @@ class WhoisCheck:
 
         return obj['domainsList']
 
+    def scrape(self, query):
+
+        ua = UserAgent()
+        headers = {
+            'User-Agent': ua.random,
+            'Referer': 'https://www.google.com/',
+            'Accept-Language': 'en-US,en;q=0.9',
+        }
+        
+        url = f'https://dnslytics.com/search?q={query}'
+
+        r = requests.get(url, headers=headers)
+
+        soup = BeautifulSoup(r.content, 'lxml')
+        links = soup.select('table a')
+
+        return [i.text for i in links]
+
     def format_title(self, url):
         sub, dom, suf = tldextract.extract(url)
         return dom
