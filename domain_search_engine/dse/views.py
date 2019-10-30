@@ -1,3 +1,4 @@
+from django.contrib.admin.views.decorators import staff_member_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -8,10 +9,12 @@ from .whois import WhoisCheck
 from django.conf import settings
 
 
+@staff_member_required
 def home(request):
     return render(request, 'pages/home.html')
 
 
+@staff_member_required
 def search(request):
     context = {
         'query': '',
@@ -51,6 +54,7 @@ def search(request):
     return render(request, 'pages/search.html', context=context)
 
 
+@staff_member_required
 @csrf_exempt
 def check_domain(request):
     if request.method == 'POST':
@@ -63,7 +67,7 @@ def check_domain(request):
         whois = WhoisCheck(settings.WHOIS_API_KEY)
         title, has_ssl = whois.get_info(f'http://{url}')
 
-        obj = DomainModel.objects.get(search_term=query, url=url)
+        obj = DomainModel.objects.filter(search_term=query, url=url)[0]
         if title:
             obj.title = title
         obj.ssl = has_ssl
