@@ -9,12 +9,10 @@ from .whois import WhoisCheck
 from django.conf import settings
 
 
-@staff_member_required
 def home(request):
     return render(request, 'pages/home.html')
 
 
-@staff_member_required
 def search(request):
     context = {
         'query': '',
@@ -54,7 +52,6 @@ def search(request):
     return render(request, 'pages/search.html', context=context)
 
 
-@staff_member_required
 @csrf_exempt
 def check_domain(request):
     if request.method == 'POST':
